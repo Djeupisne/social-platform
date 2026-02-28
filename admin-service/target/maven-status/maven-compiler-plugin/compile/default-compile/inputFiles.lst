@@ -1,0 +1,13 @@
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\AdminServiceApplication.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\dto\response\MenageEligibleResponse.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\dto\response\StatistiquesResponse.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\dto\request\ProgrammeSocialRequest.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\feign\MainServiceClient.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\service\AdminMenageService.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\dto\response\ProgrammeSocialResponse.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\service\ProgrammeSocialService.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\repository\ProgrammeSocialRepository.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\controller\ProgrammeSocialController.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\enums\CategorieSociale.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\controller\AdminMenageController.java
+C:\wamp64\www\social-platform\admin-service\src\main\java\com\social\admin\entity\ProgrammeSocial.java

@@ -1,0 +1,368 @@
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: social_db
+    environment:
+      POSTGRES_USER: social_user
+      POSTGRES_PASSWORD: social_pass
+      POSTGRES_DB: social_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U social_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: social_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: social_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: social_keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/social_db
+      KC_DB_USERNAME: social_user
+      KC_DB_PASSWORD: social_pass
+      KC_FEATURES: token-exchange
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_PROXY: edge
+    ports:
+      - "8080:8080"
+    command: start-dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - social-network
+
+  config-server:
+    build: ./config-server
+    container_name: config_server
+    ports:
+      - "8888:8888"
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  discovery-service:
+    build: ./discovery-service
+    container_name: discovery_service
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_SERVICE_URL=http://discovery-service:8761/eureka/
+      - SPRING_SECURITY_USER_NAME=eureka
+      - SPRING_SECURITY_USER_PASSWORD=eureka-secret
+    depends_on:
+      config-server:
+        condition: service_healthy
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-u", "eureka:eureka-secret", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api_gateway
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:eureka-secret@discovery-service:8761/eureka/
+      - SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED=true
+      - SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWER_CASE_SERVICE_ID=true
+      # Auth service
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_ID=auth-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_URI=lb://AUTH-SERVICE
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[0]=Path=/api/auth/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_FILTERS[0]=StripPrefix=1
+      # Auth service direct
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_ID=auth-service-direct
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_URI=lb://AUTH-SERVICE
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_PREDICATES[0]=Path=/auth/**
+      # Main service
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_ID=main-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_URI=lb://MAIN-SERVICE
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_PREDICATES[0]=Path=/api/main/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_FILTERS[0]=StripPrefix=1
+      # Scoring service — via Eureka (Python enregistré comme scoring-service)
+      - SPRING_CLOUD_GATEWAY_ROUTES[3]_ID=scoring-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[3]_URI=lb://SCORING-SERVICE
+      - SPRING_CLOUD_GATEWAY_ROUTES[3]_PREDICATES[0]=Path=/api/scoring/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[3]_FILTERS[0]=StripPrefix=1
+      # Admin service
+      - SPRING_CLOUD_GATEWAY_ROUTES[4]_ID=admin-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[4]_URI=lb://ADMIN-SERVICE
+      - SPRING_CLOUD_GATEWAY_ROUTES[4]_PREDICATES[0]=Path=/api/admin/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[4]_FILTERS[0]=StripPrefix=1
+      # Report service
+      - SPRING_CLOUD_GATEWAY_ROUTES[5]_ID=report-service
+      - SPRING_CLOUD_GATEWAY_ROUTES[5]_URI=lb://REPORT-SERVICE
+      - SPRING_CLOUD_GATEWAY_ROUTES[5]_PREDICATES[0]=Path=/api/report/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[5]_FILTERS[0]=StripPrefix=1
+      # CORS
+      - SPRING_CLOUD_GATEWAY_GLOBALCORSCONFIGURATION_CORS_CONFIGURATIONS[/**]_ALLOWED_ORIGINS=http://localhost:4200,http://localhost
+      - SPRING_CLOUD_GATEWAY_GLOBALCORSCONFIGURATION_CORS_CONFIGURATIONS[/**]_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
+      - SPRING_CLOUD_GATEWAY_GLOBALCORSCONFIGURATION_CORS_CONFIGURATIONS[/**]_ALLOWED_HEADERS=*
+      - SPRING_CLOUD_GATEWAY_GLOBALCORSCONFIGURATION_CORS_CONFIGURATIONS[/**]_ALLOW_CREDENTIALS=true
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth_service
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:eureka-secret@discovery-service:8761/eureka/
+      - SPRING_APPLICATION_NAME=auth-service
+      - SERVER_PORT=8081
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,gateway
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  main-service:
+    build: ./main-service
+    container_name: main_service
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:eureka-secret@discovery-service:8761/eureka/
+      - SPRING_APPLICATION_NAME=main-service
+      - SERVER_PORT=8082
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  # ============================================================
+  # SCORING SERVICE — Python (FastAPI) remplace le Java
+  # ============================================================
+  scoring-service:
+    build: ./scoring-service-python
+    container_name: scoring_service
+    ports:
+      - "8083:8083"
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=social_db
+      - POSTGRES_USER=social_user
+      - POSTGRES_PASSWORD=social_pass
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:eureka-secret@discovery-service:8761/eureka/
+      - SPRING_APPLICATION_NAME=scoring-service
+      - SERVER_PORT=8083
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  admin-service:
+    build: ./admin-service
+    container_name: admin_service
+    ports:
+      - "8084:8084"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:eureka-secret@discovery-service:8761/eureka/
+      - SPRING_APPLICATION_NAME=admin-service
+      - SERVER_PORT=8084
+    depends_on:
+      postgres:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  report-service:
+    build: ./report-service
+    container_name: report_service
+    ports:
+      - "8085:8085"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:eureka-secret@discovery-service:8761/eureka/
+      - SPRING_APPLICATION_NAME=report-service
+      - SERVER_PORT=8085
+    depends_on:
+      postgres:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    networks:
+      - social-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus-config:/etc/prometheus
+    networks:
+      - social-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    depends_on:
+      - api-gateway
+      - auth-service
+      - main-service
+      - scoring-service
+      - admin-service
+      - report-service
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - social-network
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:
+  grafana_data:
+
+networks:
+  social-network:
+    driver: bridge

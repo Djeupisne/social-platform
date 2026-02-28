@@ -1,0 +1,5 @@
+com\social\report\dto\ReportRequest.class
+com\social\report\service\ReportService.class
+com\social\report\feign\MainServiceClient.class
+com\social\report\ReportServiceApplication.class
+com\social\report\controller\ReportController.class

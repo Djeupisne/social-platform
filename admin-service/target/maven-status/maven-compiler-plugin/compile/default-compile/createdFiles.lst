@@ -1,0 +1,15 @@
+com\social\admin\entity\ProgrammeSocial$ProgrammeSocialBuilder.class
+com\social\scoring\enums\CategorieSociale.class
+com\social\admin\dto\response\MenageEligibleResponse.class
+com\social\admin\controller\ProgrammeSocialController.class
+com\social\admin\dto\response\StatistiquesResponse$StatistiquesResponseBuilder.class
+com\social\admin\service\AdminMenageService.class
+com\social\admin\dto\response\ProgrammeSocialResponse.class
+com\social\admin\feign\MainServiceClient.class
+com\social\admin\service\ProgrammeSocialService.class
+com\social\admin\dto\request\ProgrammeSocialRequest.class
+com\social\admin\repository\ProgrammeSocialRepository.class
+com\social\admin\controller\AdminMenageController.class
+com\social\admin\entity\ProgrammeSocial.class
+com\social\admin\AdminServiceApplication.class
+com\social\admin\dto\response\StatistiquesResponse.class
