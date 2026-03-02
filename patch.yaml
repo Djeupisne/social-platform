@@ -1,0 +1,12 @@
+﻿spec:
+  template:
+    spec:
+      containers:
+      - name: config-server
+        volumeMounts:
+        - name: config-repo
+          mountPath: /config-repo
+      volumes:
+      - name: config-repo
+        configMap:
+          name: config-repo

@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-service
+  namespace: social-platform
+  labels:
+    app: discovery-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discovery-service
+  template:
+    metadata:
+      labels:
+        app: discovery-service
+    spec:
+      initContainers:
+      - name: wait-config-server
+        image: busybox:1.36
+        command: ['sh', '-c', 'until wget -q http://config-server:8888/actuator/health; do echo waiting for config-server; sleep 5; done']
+      containers:
+      - name: discovery-service
+        image: social-platform-discovery-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8761
+        env:
+        - name: SPRING_CLOUD_CONFIG_URI
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: config-server-url
+        - name: SPRING_SECURITY_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: eureka-user
+        - name: SPRING_SECURITY_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: eureka-password
+        - name: EUREKA_INSTANCE_HOSTNAME
+          value: "discovery-service"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8761
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: discovery-service
+  namespace: social-platform
+spec:
+  selector:
+    app: discovery-service
+  ports:
+  - port: 8761
+    targetPort: 8761
+  type: ClusterIP

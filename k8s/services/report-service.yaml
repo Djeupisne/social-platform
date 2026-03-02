@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: report-service
+  namespace: social-platform
+  labels:
+    app: report-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: report-service
+  template:
+    metadata:
+      labels:
+        app: report-service
+    spec:
+      initContainers:
+      - name: wait-postgres
+        image: busybox:1.36
+        command: ['sh', '-c', 'until nc -z postgres 5432; do echo waiting; sleep 3; done']
+      containers:
+      - name: report-service
+        image: social-platform-report-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8085
+        env:
+        - name: SPRING_CLOUD_CONFIG_URI
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: config-server-url
+        - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: eureka-url
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://postgres:5432/social_db"
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: postgres-user
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: postgres-password
+        resources:
+          requests:
+            memory: "384Mi"
+            cpu: "300m"
+          limits:
+            memory: "768Mi"
+            cpu: "600m"
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8085
+          initialDelaySeconds: 40
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: report-service
+  namespace: social-platform
+spec:
+  selector:
+    app: report-service
+  ports:
+  - port: 8085
+    targetPort: 8085
+  type: ClusterIP

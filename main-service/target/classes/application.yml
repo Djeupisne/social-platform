@@ -1,13 +1,12 @@
-server:
+﻿server:
   port: 8082
-
 spring:
   application:
     name: main-service
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:postgres}:${POSTGRES_PORT:5432}/${POSTGRES_DB:social_db}
-    username: ${POSTGRES_USER:social_user}
-    password: ${POSTGRES_PASSWORD:social_pass}
+    url: jdbc:postgresql://${DB_HOST:postgres}:5432/${DB_NAME:social_db}
+    username: ${DB_USER:social_user}
+    password: ${DB_PASSWORD:social_pass}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -15,12 +14,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
   rabbitmq:
-    host: ${RABBITMQ_HOST:rabbitmq}
-    port: ${RABBITMQ_PORT:5672}
-    username: ${RABBITMQ_USER:guest}
-    password: ${RABBITMQ_PASSWORD:guest}
-
+    host: ${RABBIT_HOST:rabbitmq}
+    port: 5672
+    username: ${RABBIT_USER:social_rabbit}
+    password: ${RABBIT_PASSWORD:RabbitTogo2024}
 eureka:
   client:
     service-url:
@@ -30,9 +30,23 @@ eureka:
   instance:
     hostname: ${spring.application.name}
     prefer-ip-address: true
-
+    health-check-url-path: /actuator/health
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  health:
+    mail:
+      enabled: false
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true

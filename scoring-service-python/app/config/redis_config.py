@@ -1,15 +1,19 @@
-import json
+﻿import json
 import os
 from typing import Optional, Any
-
 import redis
 
-REDIS_HOST = os.getenv("REDIS_HOST", "redis")
-REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
-CACHE_TTL = 60 * 30  # 30 minutes (comme dans le Java)
+REDIS_HOST = os.getenv("REDIS_SERVICE_HOST", "redis")
+REDIS_SERVICE_PORT = os.getenv("REDIS_SERVICE_PORT", "6379")
+# Extraire juste le numéro de port au cas où
+try:
+    REDIS_PORT = int(REDIS_SERVICE_PORT)
+except ValueError:
+    REDIS_PORT = 6379
+
+CACHE_TTL = 60 * 30  # 30 minutes
 
 _redis_client: Optional[redis.Redis] = None
-
 
 def get_redis() -> redis.Redis:
     global _redis_client
@@ -21,7 +25,6 @@ def get_redis() -> redis.Redis:
         )
     return _redis_client
 
-
 def cache_get(key: str) -> Optional[Any]:
     try:
         client = get_redis()
@@ -32,14 +35,12 @@ def cache_get(key: str) -> Optional[Any]:
         pass
     return None
 
-
 def cache_set(key: str, value: Any, ttl: int = CACHE_TTL) -> None:
     try:
         client = get_redis()
         client.setex(key, ttl, json.dumps(value, default=str))
     except Exception:
         pass
-
 
 def cache_delete(key: str) -> None:
     try:

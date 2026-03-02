@@ -30,6 +30,7 @@ com\social\auth\validation\ValidFullName.class
 com\social\auth\dto\request\RegisterAgentRequest.class
 com\social\auth\dto\request\TwoFaVerifyRequest.class
 com\social\auth\dto\response\TokenResponse$TokenResponseBuilder.class
+com\social\auth\service\KeycloakService.class
 com\social\auth\service\EmailService.class
 com\social\auth\config\SecurityConfig.class
 com\social\auth\controller\AuthController.class

@@ -22,19 +22,11 @@ public class ProgrammeEligibiliteDto {
     // Statistiques rapides
     private int totalMenagesParRegion;
     private double scoreMoyenEligibles;
-}
 
-@Data
-@Builder
-class MenageEligibleDto {
-    private UUID menageId;
-    private String codeMenage;
-    private String chefNom;
-    private String chefContact;
-    private int score;
-    private String categorie;
-    private String region;
-    private String ville;
-    private int nombreResidents;
-    private boolean beneficiaireActuel; // Déjà bénéficiaire ou non
+    // Méthodes getter explicites (si Lombok ne fonctionne pas)
+    public String getNomProgramme() { return nomProgramme; }
+    public String getDescription() { return description; }
+    public LocalDateTime getDateGeneration() { return dateGeneration; }
+    public int getTotalMenagesEligibles() { return totalMenagesEligibles; }
+    public List<MenageEligibleDto> getMenagesEligibles() { return menagesEligibles; }
 }

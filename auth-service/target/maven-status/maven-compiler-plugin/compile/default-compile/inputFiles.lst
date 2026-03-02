@@ -23,6 +23,7 @@ C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\dto\req
 C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\dto\request\RegisterChefRequest.java
 C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\dto\response\UserResponse.java
 C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\entity\CustomRevisionEntity.java
+C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\service\KeycloakService.java
 C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\dto\response\AuthResponse.java
 C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\security\TotpManager.java
 C:\wamp64\www\social-platform\auth-service\src\main\java\com\social\auth\enums\UserRole.java

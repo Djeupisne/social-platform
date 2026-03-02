@@ -1,0 +1,706 @@
+
+========================================
+LOGS: auth-service
+========================================
+Defaulted container "auth-service" out of: auth-service, wait-postgres (init)
+Defaulted container "auth-service" out of: auth-service, wait-postgres (init)
+Defaulted container "auth-service" out of: auth-service, wait-postgres (init)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.doInLock(LettuceConnectionFactory.java:1478) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getConnection(LettuceConnectionFactory.java:1515) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getSharedReactiveConnection(LettuceConnectionFactory.java:1224) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:1099) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:130) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	at reactor.core.publisher.MonoSupplier.call(MonoSupplier.java:67) ~[reactor-core-3.6.0.jar!/:3.6.0]
+	at reactor.core.publisher.FluxSubscribeOnCallable$CallableSubscribeOnSubscription.run(FluxSubscribeOnCallable.java:228) ~[reactor-core-3.6.0.jar!/:3.6.0]
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68) ~[reactor-core-3.6.0.jar!/:3.6.0]
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28) ~[reactor-core-3.6.0.jar!/:3.6.0]
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) ~[na:na]
+	at java.base/java.lang.Thread.run(Unknown Source) ~[na:na]
+Caused by: io.lettuce.core.RedisConnectionException: Unable to connect to redis/<unresolved>:6379
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:78) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:56) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.AbstractRedisClient.getConnection(AbstractRedisClient.java:350) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.RedisClient.connect(RedisClient.java:215) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.lambda$getConnection$1(StandaloneConnectionProvider.java:112) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	at java.base/java.util.Optional.orElseGet(Unknown Source) ~[na:na]
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.getConnection(StandaloneConnectionProvider.java:112) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1734) ~[spring-data-redis-3.2.0.jar!/:3.2.0]
+	... 16 common frames omitted
+Caused by: io.lettuce.core.RedisCommandExecutionException: NOAUTH HELLO must be called with the client already authenticated, otherwise the HELLO <proto> AUTH <user> <pass> option can be used to authenticate the client and select the RESP protocol version at the same time
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:147) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:116) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.protocol.AsyncCommand.completeResult(AsyncCommand.java:120) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.protocol.AsyncCommand.complete(AsyncCommand.java:111) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.protocol.CommandWrapper.complete(CommandWrapper.java:63) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.protocol.CommandHandler.complete(CommandHandler.java:745) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.protocol.CommandHandler.decode(CommandHandler.java:680) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.lettuce.core.protocol.CommandHandler.channelRead(CommandHandler.java:597) ~[lettuce-core-6.3.0.RELEASE.jar!/:6.3.0.RELEASE/9bb1669]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.101.Final.jar!/:4.1.101.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.101.Final.jar!/:4.1.101.Final]
+	... 1 common frames omitted
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-03-01T02:41:12.022Z  INFO 1 --- [auth-service] [           main] com.social.auth.AuthServiceApplication   : Starting AuthServiceApplication v1.0.0 using Java 17.0.18 with PID 1 (/app/app.jar started by root in /app)
+2026-03-01T02:41:12.029Z  INFO 1 --- [auth-service] [           main] com.social.auth.AuthServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-03-01T02:41:32.137Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-01T02:41:32.216Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-01T02:41:33.735Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1410 ms. Found 1 JPA repository interface.
+2026-03-01T02:41:34.028Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-01T02:41:34.118Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-01T02:41:34.321Z  INFO 1 --- [auth-service] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.social.auth.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-01T02:41:34.321Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 98 ms. Found 0 Redis repository interfaces.
+2026-03-01T02:41:39.023Z  INFO 1 --- [auth-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=7bf57aa8-bcc5-30ae-b6a7-9b47bf8a6435
+2026-03-01T02:41:44.331Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$LoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$LoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-03-01T02:41:44.420Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:44.427Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:44.635Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:44.722Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:44.727Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$579/0x00007d6b8241e950] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:44.818Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:44.933Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.loadbalancer-org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.120Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'default.org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.218Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'default.org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.220Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'default.org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.233Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerClientFactory' of type [org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.429Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'blockingLoadBalancerClient' of type [org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.631Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerServiceInstanceCookieTransformer' of type [org.springframework.cloud.loadbalancer.core.LoadBalancerServiceInstanceCookieTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.716Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'xForwarderHeadersTransformer' of type [org.springframework.cloud.loadbalancer.blocking.XForwardedHeadersTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.721Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.729Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerRequestFactory' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.816Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:50.629Z  INFO 1 --- [auth-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-03-01T02:41:50.722Z  INFO 1 --- [auth-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-01T02:41:50.723Z  INFO 1 --- [auth-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-01T02:41:52.025Z  INFO 1 --- [auth-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-01T02:41:52.030Z  INFO 1 --- [auth-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 39301 ms
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-03-01T02:41:12.420Z  INFO 1 --- [auth-service] [           main] com.social.auth.AuthServiceApplication   : Starting AuthServiceApplication v1.0.0 using Java 17.0.18 with PID 1 (/app/app.jar started by root in /app)
+2026-03-01T02:41:12.439Z  INFO 1 --- [auth-service] [           main] com.social.auth.AuthServiceApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-03-01T02:41:32.915Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-01T02:41:32.920Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-01T02:41:35.238Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2207 ms. Found 1 JPA repository interface.
+2026-03-01T02:41:35.531Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-01T02:41:35.619Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-01T02:41:35.927Z  INFO 1 --- [auth-service] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.social.auth.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-01T02:41:36.015Z  INFO 1 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 0 Redis repository interfaces.
+2026-03-01T02:41:40.326Z  INFO 1 --- [auth-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=7bf57aa8-bcc5-30ae-b6a7-9b47bf8a6435
+2026-03-01T02:41:45.117Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$LoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$LoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-03-01T02:41:45.136Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.220Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.417Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.435Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.517Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$579/0x000074d4da41e950] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.538Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.715Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'spring.cloud.loadbalancer-org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerClientsProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.828Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'default.org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.921Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'default.org.springframework.cloud.loadbalancer.config.BlockingLoadBalancerClientAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:45.923Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'default.org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration.LoadBalancerClientSpecification' of type [org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientSpecification] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:46.018Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerClientFactory' of type [org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:46.220Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'blockingLoadBalancerClient' of type [org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:46.421Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerServiceInstanceCookieTransformer' of type [org.springframework.cloud.loadbalancer.core.LoadBalancerServiceInstanceCookieTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:46.432Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'xForwarderHeadersTransformer' of type [org.springframework.cloud.loadbalancer.blocking.XForwardedHeadersTransformer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:46.520Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:46.535Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerRequestFactory' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:46.622Z  WARN 1 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'loadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:41:50.938Z  INFO 1 --- [auth-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-03-01T02:41:51.032Z  INFO 1 --- [auth-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-01T02:41:51.033Z  INFO 1 --- [auth-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-01T02:41:52.528Z  INFO 1 --- [auth-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-01T02:41:52.615Z  INFO 1 --- [auth-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 39489 ms
+
+========================================
+LOGS: main-service
+========================================
+Defaulted container "main-service" out of: main-service, wait-postgres (init)
+Defaulted container "main-service" out of: main-service, wait-postgres (init)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:109) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:735) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at java.base/java.lang.Thread.run(Unknown Source) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(Unknown Source) ~[na:na]
+	at java.base/java.net.Socket.connect(Unknown Source) ~[na:na]
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:61) ~[amqp-client-5.19.0.jar!/:5.19.0]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1249) ~[amqp-client-5.19.0.jar!/:5.19.0]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1198) ~[amqp-client-5.19.0.jar!/:5.19.0]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:632) ~[spring-rabbit-3.1.0.jar!/:3.1.0]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:607) ~[spring-rabbit-3.1.0.jar!/:3.1.0]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:557) ~[spring-rabbit-3.1.0.jar!/:3.1.0]
+	... 150 common frames omitted
+
+2026-03-01T02:39:14.983Z  INFO 1 --- [main-service] [nio-8082-exec-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
+2026-03-01T02:39:15.001Z  INFO 1 --- [main-service] [nio-8082-exec-1] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#6129f50e:111/SimpleConnection@55867025 [delegate=amqp://social_rabbit@10.97.71.113:5672/, localPort=35368]
+2026-03-01T02:40:44.420Z  INFO 1 --- [main-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:109) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.1.jar!/:6.1.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:735) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.16.jar!/:na]
+	at java.base/java.lang.Thread.run(Unknown Source) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Unknown Source) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(Unknown Source) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(Unknown Source) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(Unknown Source) ~[na:na]
+	at java.base/java.net.Socket.connect(Unknown Source) ~[na:na]
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:61) ~[amqp-client-5.19.0.jar!/:5.19.0]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1249) ~[amqp-client-5.19.0.jar!/:5.19.0]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1198) ~[amqp-client-5.19.0.jar!/:5.19.0]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:632) ~[spring-rabbit-3.1.0.jar!/:3.1.0]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:607) ~[spring-rabbit-3.1.0.jar!/:3.1.0]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:557) ~[spring-rabbit-3.1.0.jar!/:3.1.0]
+	... 150 common frames omitted
+
+2026-03-01T02:39:05.978Z  INFO 1 --- [main-service] [nio-8082-exec-6] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
+2026-03-01T02:39:05.995Z  INFO 1 --- [main-service] [nio-8082-exec-6] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#a90447f:110/SimpleConnection@629d349d [delegate=amqp://social_rabbit@10.97.71.113:5672/, localPort=49664]
+
+========================================
+LOGS: rabbitmq
+========================================
+2026-03-01 02:38:46.046644+00:00 [info] <0.634.0> Recovering 0 queues of type rabbit_quorum_queue took 0ms[0m
+2026-03-01 02:38:46.046800+00:00 [info] <0.634.0> Recovering 0 queues of type rabbit_stream_queue took 0ms[0m
+2026-03-01 02:38:46.062218+00:00 [info] <0.254.0> Created user 'social_rabbit'[0m
+2026-03-01 02:38:46.067993+00:00 [info] <0.254.0> Successfully set user tags for user 'social_rabbit' to [administrator][0m
+2026-03-01 02:38:46.076537+00:00 [info] <0.254.0> Successfully set permissions for user 'social_rabbit' in virtual host '/' to '.*', '.*', '.*'[0m
+2026-03-01 02:38:46.076733+00:00 [info] <0.254.0> Running boot step rabbit_observer_cli defined by app rabbit[0m
+2026-03-01 02:38:46.077165+00:00 [info] <0.254.0> Running boot step rabbit_looking_glass defined by app rabbit[0m
+2026-03-01 02:38:46.077270+00:00 [info] <0.254.0> Running boot step rabbit_core_metrics_gc defined by app rabbit[0m
+2026-03-01 02:38:46.077670+00:00 [info] <0.254.0> Running boot step background_gc defined by app rabbit[0m
+2026-03-01 02:38:46.078300+00:00 [info] <0.254.0> Running boot step routing_ready defined by app rabbit[0m
+2026-03-01 02:38:46.078447+00:00 [info] <0.254.0> Running boot step pre_flight defined by app rabbit[0m
+2026-03-01 02:38:46.078597+00:00 [info] <0.254.0> Running boot step notify_cluster defined by app rabbit[0m
+2026-03-01 02:38:46.078720+00:00 [info] <0.254.0> Running boot step networking defined by app rabbit[0m
+2026-03-01 02:38:46.079178+00:00 [info] <0.254.0> Running boot step rabbit_quorum_queue_periodic_membership_reconciliation defined by app rabbit[0m
+2026-03-01 02:38:46.080261+00:00 [info] <0.254.0> Running boot step definition_import_worker_pool defined by app rabbit[0m
+2026-03-01 02:38:46.080397+00:00 [info] <0.315.0> Starting worker pool 'definition_import_pool' with 8 processes in it[0m
+2026-03-01 02:38:46.082238+00:00 [info] <0.254.0> Running boot step cluster_name defined by app rabbit[0m
+2026-03-01 02:38:46.082444+00:00 [info] <0.254.0> Initialising internal cluster ID to 'rabbitmq-cluster-id-ATiiuO5XlLjNkkv9Hq9oTQ'[0m
+2026-03-01 02:38:46.086836+00:00 [info] <0.254.0> Running boot step virtual_host_reconciliation defined by app rabbit[0m
+2026-03-01 02:38:46.087272+00:00 [info] <0.254.0> Running boot step direct_client defined by app rabbit[0m
+2026-03-01 02:38:46.087552+00:00 [info] <0.254.0> Running boot step rabbit_federation_exchange defined by app rabbitmq_federation[0m
+2026-03-01 02:38:46.087890+00:00 [info] <0.254.0> Running boot step rabbit_management_load_definitions defined by app rabbitmq_management[0m
+2026-03-01 02:38:46.088107+00:00 [info] <0.688.0> Resetting node maintenance status[0m
+[38;5;214m2026-03-01 02:38:47.610752+00:00 [warning] <0.717.0> Deprecated features: `management_metrics_collection`: Feature `management_metrics_collection` is deprecated.[0m
+[38;5;214m2026-03-01 02:38:47.610752+00:00 [warning] <0.717.0> By default, this feature can still be used for now.[0m
+[38;5;214m2026-03-01 02:38:47.610752+00:00 [warning] <0.717.0> Its use will not be permitted by default in a future minor RabbitMQ version and the feature will be removed from a future major RabbitMQ version; actual versions to be determined.[0m
+[38;5;214m2026-03-01 02:38:47.610752+00:00 [warning] <0.717.0> To continue using this feature when it is not permitted by default, set the following parameter in your configuration:[0m
+[38;5;214m2026-03-01 02:38:47.610752+00:00 [warning] <0.717.0>     "deprecated_features.permit.management_metrics_collection = true"[0m
+[38;5;214m2026-03-01 02:38:47.610752+00:00 [warning] <0.717.0> To test RabbitMQ as if the feature was removed, set this in your configuration:[0m
+[38;5;214m2026-03-01 02:38:47.610752+00:00 [warning] <0.717.0>     "deprecated_features.permit.management_metrics_collection = false"[0m
+2026-03-01 02:39:05.017789+00:00 [info] <0.754.0> Management plugin: HTTP (non-TLS) listener started on port 15672[0m
+2026-03-01 02:39:05.018149+00:00 [info] <0.784.0> Statistics database started.[0m
+2026-03-01 02:39:05.018440+00:00 [info] <0.783.0> Starting worker pool 'management_worker_pool' with 3 processes in it[0m
+2026-03-01 02:39:05.071020+00:00 [info] <0.802.0> Prometheus metrics: HTTP (non-TLS) listener started on port 15692[0m
+2026-03-01 02:39:05.071353+00:00 [info] <0.688.0> Ready to start client connection listeners[0m
+2026-03-01 02:39:05.074702+00:00 [info] <0.846.0> started TCP listener on [::]:5672[0m
+ completed with 5 plugins.
+2026-03-01 02:39:05.689114+00:00 [info] <0.688.0> Server startup complete; 5 plugins started.[0m
+2026-03-01 02:39:05.689114+00:00 [info] <0.688.0>  * rabbitmq_prometheus[0m
+2026-03-01 02:39:05.689114+00:00 [info] <0.688.0>  * rabbitmq_federation[0m
+2026-03-01 02:39:05.689114+00:00 [info] <0.688.0>  * rabbitmq_management[0m
+2026-03-01 02:39:05.689114+00:00 [info] <0.688.0>  * rabbitmq_management_agent[0m
+2026-03-01 02:39:05.689114+00:00 [info] <0.688.0>  * rabbitmq_web_dispatch[0m
+2026-03-01 02:39:05.787103+00:00 [info] <0.9.0> Time to start RabbitMQ: 48098 ms[0m
+2026-03-01 02:39:05.980773+00:00 [info] <0.850.0> accepting AMQP connection <0.850.0> (10.1.0.61:49664 -> 10.1.0.37:5672)[0m
+2026-03-01 02:39:05.989504+00:00 [info] <0.850.0> connection <0.850.0> (10.1.0.61:49664 -> 10.1.0.37:5672) has a client-provided name: rabbitConnectionFactory#a90447f:110[0m
+2026-03-01 02:39:05.995525+00:00 [info] <0.850.0> connection <0.850.0> (10.1.0.61:49664 -> 10.1.0.37:5672 - rabbitConnectionFactory#a90447f:110): user 'social_rabbit' authenticated and granted access to vhost '/'[0m
+2026-03-01 02:39:14.989090+00:00 [info] <0.880.0> accepting AMQP connection <0.880.0> (10.1.0.58:35368 -> 10.1.0.37:5672)[0m
+2026-03-01 02:39:14.996323+00:00 [info] <0.880.0> connection <0.880.0> (10.1.0.58:35368 -> 10.1.0.37:5672) has a client-provided name: rabbitConnectionFactory#6129f50e:111[0m
+2026-03-01 02:39:14.999785+00:00 [info] <0.880.0> connection <0.880.0> (10.1.0.58:35368 -> 10.1.0.37:5672 - rabbitConnectionFactory#6129f50e:111): user 'social_rabbit' authenticated and granted access to vhost '/'[0m
+
+========================================
+LOGS: scoring-service
+========================================
+Defaulted container "scoring-service" out of: scoring-service, wait-postgres (init)
+Defaulted container "scoring-service" out of: scoring-service, wait-postgres (init)
+INFO:     10.1.0.1:38562 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:34376 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:47150 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:40564 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:49458 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59886 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:37802 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:46204 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:52736 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60056 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:49396 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:34432 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36476 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:44482 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55374 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59608 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:58668 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:53170 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:34950 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:47046 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36252 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:42314 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:45068 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55256 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:56606 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:35308 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60598 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:43900 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36396 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:48588 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:43314 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59062 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:57226 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:35446 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:42012 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:41326 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:54700 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36980 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:34420 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:46332 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:42882 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:37026 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:56648 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:54472 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:44140 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:39738 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:51460 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:42094 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:51688 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:41160 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:39174 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:33704 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55704 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:43402 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:38862 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:48926 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:47146 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:45598 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:46078 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:52408 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:57298 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:39508 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36796 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:56814 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:41548 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36004 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:50784 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:44010 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55100 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:53098 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:50448 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:45648 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:45358 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36278 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55572 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:34370 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:45644 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59718 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:44378 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:57940 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:41828 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:58184 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:36026 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:33090 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:48286 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59128 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:47130 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:57232 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:39360 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:43498 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:33450 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60728 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:52806 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:51244 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:58058 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:56104 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55492 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60112 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60302 - "GET /actuator/health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:45444 - "GET /actuator/health HTTP/1.1" 200 OK
+
+========================================
+LOGS: api-gateway
+========================================
+Defaulted container "api-gateway" out of: api-gateway, wait-discovery (init)
+Defaulted container "api-gateway" out of: api-gateway, wait-discovery (init)
+2026-03-01T02:05:47.823Z  WARN 1 --- [api-gateway] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [loadBalancerWebClientBuilderBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:05:55.212Z  INFO 1 --- [api-gateway] [           main] ctiveUserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 26e8c527-6674-4faa-aa62-03f5cdf5597d
+
+2026-03-01T02:06:24.921Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-03-01T02:06:24.922Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-03-01T02:06:24.922Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-03-01T02:06:24.922Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-03-01T02:06:24.923Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-03-01T02:06:24.923Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-03-01T02:06:24.923Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-03-01T02:06:24.924Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-03-01T02:06:24.924Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-03-01T02:06:24.925Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-03-01T02:06:24.925Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-03-01T02:06:24.926Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-03-01T02:06:24.926Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-03-01T02:06:24.926Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-03-01T02:06:29.722Z  INFO 1 --- [api-gateway] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2026-03-01T02:06:33.716Z  INFO 1 --- [api-gateway] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-03-01T02:06:34.007Z  WARN 1 --- [api-gateway] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-01T02:06:34.643Z  INFO 1 --- [api-gateway] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-03-01T02:06:35.416Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-03-01T02:06:35.509Z  INFO 1 --- [api-gateway] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:06:35.724Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-03-01T02:06:35.725Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-03-01T02:06:35.725Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-03-01T02:06:35.725Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-03-01T02:06:35.726Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-03-01T02:06:35.726Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-03-01T02:06:35.726Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-03-01T02:06:41.605Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-03-01T02:06:41.616Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-03-01T02:06:41.625Z  INFO 1 --- [api-gateway] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-01T02:06:41.723Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1772330801721 with initial instances count: 6
+2026-03-01T02:06:41.731Z  INFO 1 --- [api-gateway] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2026-03-01T02:06:41.805Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1772330801805, current=UP, previous=STARTING]
+2026-03-01T02:06:41.808Z  INFO 1 --- [api-gateway] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/api-gateway-5cdf87f9f7-fgk9f:api-gateway:9000: registering service...
+2026-03-01T02:06:42.806Z  INFO 1 --- [api-gateway] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/api-gateway-5cdf87f9f7-fgk9f:api-gateway:9000 - registration status: 204
+2026-03-01T02:06:44.519Z  INFO 1 --- [api-gateway] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 9000
+2026-03-01T02:06:44.605Z  INFO 1 --- [api-gateway] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9000
+2026-03-01T02:06:44.917Z  INFO 1 --- [api-gateway] [           main] c.social.gateway.ApiGatewayApplication   : Started ApiGatewayApplication in 93.874 seconds (process running for 104.665)
+2026-03-01T02:11:35.773Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:16:35.737Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:21:35.705Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:26:35.673Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:31:35.642Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:36:35.615Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:41:35.587Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:05:47.627Z  WARN 1 --- [api-gateway] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [loadBalancerWebClientBuilderBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-01T02:05:54.915Z  INFO 1 --- [api-gateway] [           main] ctiveUserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 83db2b43-1e0f-409e-92b0-e596e4cb192c
+
+2026-03-01T02:06:20.618Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-03-01T02:06:20.618Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-03-01T02:06:20.623Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-03-01T02:06:20.630Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-03-01T02:06:20.650Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-03-01T02:06:20.651Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-03-01T02:06:20.651Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-03-01T02:06:20.651Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-03-01T02:06:20.651Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-03-01T02:06:20.652Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-03-01T02:06:20.665Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-03-01T02:06:20.680Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-03-01T02:06:20.684Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-03-01T02:06:20.712Z  INFO 1 --- [api-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-03-01T02:06:27.013Z  INFO 1 --- [api-gateway] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2026-03-01T02:06:31.016Z  INFO 1 --- [api-gateway] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-03-01T02:06:31.325Z  WARN 1 --- [api-gateway] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-01T02:06:32.132Z  INFO 1 --- [api-gateway] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-03-01T02:06:32.937Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-03-01T02:06:33.028Z  INFO 1 --- [api-gateway] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:06:33.532Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-03-01T02:06:33.533Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-03-01T02:06:33.626Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-03-01T02:06:33.626Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-03-01T02:06:33.626Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-03-01T02:06:33.626Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-03-01T02:06:33.626Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-03-01T02:06:38.811Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-03-01T02:06:38.821Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-03-01T02:06:38.831Z  INFO 1 --- [api-gateway] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-01T02:06:38.930Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1772330798928 with initial instances count: 6
+2026-03-01T02:06:38.936Z  INFO 1 --- [api-gateway] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2026-03-01T02:06:39.009Z  INFO 1 --- [api-gateway] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1772330799009, current=UP, previous=STARTING]
+2026-03-01T02:06:39.014Z  INFO 1 --- [api-gateway] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/api-gateway-5cdf87f9f7-hhxnq:api-gateway:9000: registering service...
+2026-03-01T02:06:40.222Z  INFO 1 --- [api-gateway] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/api-gateway-5cdf87f9f7-hhxnq:api-gateway:9000 - registration status: 204
+2026-03-01T02:06:42.313Z  INFO 1 --- [api-gateway] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 9000
+2026-03-01T02:06:42.320Z  INFO 1 --- [api-gateway] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9000
+2026-03-01T02:06:42.809Z  INFO 1 --- [api-gateway] [           main] c.social.gateway.ApiGatewayApplication   : Started ApiGatewayApplication in 91.182 seconds (process running for 104.333)
+2026-03-01T02:11:33.595Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:16:33.560Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:21:33.531Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:26:33.498Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:31:33.467Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:36:33.437Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:41:33.409Z  INFO 1 --- [api-gateway] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+
+========================================
+LOGS: admin-service
+========================================
+Defaulted container "admin-service" out of: admin-service, wait-postgres (init)
+2026-03-01T02:04:32.827Z  INFO 1 --- [admin-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-01T02:04:34.893Z  INFO 1 --- [admin-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-01T02:04:34.897Z  INFO 1 --- [admin-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 44087 ms
+2026-03-01T02:04:46.091Z  INFO 1 --- [admin-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-01T02:04:47.348Z  INFO 1 --- [admin-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-03-01T02:04:47.827Z  INFO 1 --- [admin-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-01T02:04:53.336Z  INFO 1 --- [admin-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-01T02:04:53.920Z  INFO 1 --- [admin-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-01T02:04:58.218Z  INFO 1 --- [admin-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2fc435e9
+2026-03-01T02:04:58.281Z  INFO 1 --- [admin-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-01T02:04:58.928Z  WARN 1 --- [admin-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-01T02:05:16.998Z  INFO 1 --- [admin-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-01T02:05:17.601Z  INFO 1 --- [admin-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-01T02:05:19.977Z  WARN 1 --- [admin-service] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-01T02:05:21.392Z  INFO 1 --- [admin-service] [           main] o.s.c.openfeign.FeignClientFactoryBean   : For 'main-service' URL not provided. Will try picking an instance via load-balancing.
+2026-03-01T02:05:26.977Z  INFO 1 --- [admin-service] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-01T02:05:49.578Z  INFO 1 --- [admin-service] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-03-01T02:05:50.499Z  WARN 1 --- [admin-service] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-01T02:05:50.993Z  INFO 1 --- [admin-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2026-03-01T02:05:53.388Z  INFO 1 --- [admin-service] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-03-01T02:05:55.084Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-03-01T02:05:55.186Z  INFO 1 --- [admin-service] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:05:55.680Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-03-01T02:05:55.681Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-03-01T02:05:55.681Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-03-01T02:05:55.682Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-03-01T02:05:55.682Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-03-01T02:05:55.682Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-03-01T02:05:55.682Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-03-01T02:06:01.494Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-03-01T02:06:01.568Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-03-01T02:06:01.582Z  INFO 1 --- [admin-service] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-01T02:06:01.675Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1772330761600 with initial instances count: 7
+2026-03-01T02:06:01.872Z  INFO 1 --- [admin-service] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application ADMIN-SERVICE with eureka with status UP
+2026-03-01T02:06:01.874Z  INFO 1 --- [admin-service] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1772330761874, current=UP, previous=STARTING]
+2026-03-01T02:06:01.878Z  INFO 1 --- [admin-service] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ADMIN-SERVICE/admin-service-66686755d6-x4n54:admin-service:8084: registering service...
+2026-03-01T02:06:02.469Z  INFO 1 --- [admin-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path ''
+2026-03-01T02:06:02.471Z  INFO 1 --- [admin-service] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8084
+2026-03-01T02:06:02.979Z  INFO 1 --- [admin-service] [           main] c.social.admin.AdminServiceApplication   : Started AdminServiceApplication in 140.882 seconds (process running for 148.846)
+2026-03-01T02:06:02.995Z  INFO 1 --- [admin-service] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ADMIN-SERVICE/admin-service-66686755d6-x4n54:admin-service:8084 - registration status: 204
+2026-03-01T02:06:03.587Z  INFO 1 --- [admin-service] [nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-01T02:06:03.587Z  INFO 1 --- [admin-service] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-01T02:06:03.683Z  INFO 1 --- [admin-service] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 95 ms
+2026-03-01T02:10:55.652Z  INFO 1 --- [admin-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:15:55.617Z  INFO 1 --- [admin-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:20:55.587Z  INFO 1 --- [admin-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:25:55.556Z  INFO 1 --- [admin-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:30:55.528Z  INFO 1 --- [admin-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:35:55.498Z  INFO 1 --- [admin-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:40:55.469Z  INFO 1 --- [admin-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+
+========================================
+LOGS: report-service
+========================================
+Defaulted container "report-service" out of: report-service, wait-postgres (init)
+2026-03-01T02:04:41.601Z  INFO 1 --- [report-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-01T02:04:41.912Z  INFO 1 --- [report-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-01T02:04:44.692Z  INFO 1 --- [report-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@23e0c200
+2026-03-01T02:04:44.698Z  INFO 1 --- [report-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-01T02:04:45.479Z  WARN 1 --- [report-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-01T02:04:53.413Z  INFO 1 --- [report-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-01T02:04:53.584Z  INFO 1 --- [report-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-01T02:04:56.485Z  WARN 1 --- [report-service] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-01T02:05:14.875Z  WARN 1 --- [report-service] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 5ed751ff-9602-478b-ad88-b9bd53ecf65b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-03-01T02:05:16.692Z  INFO 1 --- [report-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2026-03-01T02:05:17.296Z  INFO 1 --- [report-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@393aac93, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@71dac63f, org.springframework.security.web.context.SecurityContextHolderFilter@1d642682, org.springframework.security.web.header.HeaderWriterFilter@704ca8a8, org.springframework.web.filter.CorsFilter@36003e90, org.springframework.security.web.csrf.CsrfFilter@4cd13fad, org.springframework.security.web.authentication.logout.LogoutFilter@52d9a150, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@320ca97c, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@5ba7391b, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@5a1ddc7c, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3eb29382, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@fee1e32, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@365291bd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@362fbd98, org.springframework.security.web.access.ExceptionTranslationFilter@e0faed6, org.springframework.security.web.access.intercept.AuthorizationFilter@522fc988]
+2026-03-01T02:05:19.988Z  INFO 1 --- [report-service] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-03-01T02:05:20.779Z  WARN 1 --- [report-service] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-01T02:05:21.986Z  INFO 1 --- [report-service] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-03-01T02:05:22.881Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-03-01T02:05:23.365Z  INFO 1 --- [report-service] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:05:23.700Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-03-01T02:05:23.700Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-03-01T02:05:23.701Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-03-01T02:05:23.701Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-03-01T02:05:23.701Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-03-01T02:05:23.701Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-03-01T02:05:23.701Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-03-01T02:05:27.800Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-03-01T02:05:27.881Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-03-01T02:05:27.896Z  INFO 1 --- [report-service] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-01T02:05:27.973Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1772330727968 with initial instances count: 4
+2026-03-01T02:05:28.090Z  INFO 1 --- [report-service] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application REPORT-SERVICE with eureka with status UP
+2026-03-01T02:05:28.092Z  INFO 1 --- [report-service] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1772330728092, current=UP, previous=STARTING]
+2026-03-01T02:05:28.097Z  INFO 1 --- [report-service] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_REPORT-SERVICE/report-service-7b5cfb58f-hdpd6:report-service:8085: registering service...
+2026-03-01T02:05:28.402Z  INFO 1 --- [report-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path ''
+2026-03-01T02:05:28.404Z  INFO 1 --- [report-service] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8085
+2026-03-01T02:05:28.704Z  INFO 1 --- [report-service] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_REPORT-SERVICE/report-service-7b5cfb58f-hdpd6:report-service:8085 - registration status: 204
+2026-03-01T02:05:28.786Z  INFO 1 --- [report-service] [           main] c.s.report.ReportServiceApplication      : Started ReportServiceApplication in 105.691 seconds (process running for 112.646)
+2026-03-01T02:05:31.685Z  INFO 1 --- [report-service] [nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-01T02:05:31.685Z  INFO 1 --- [report-service] [nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-01T02:05:31.691Z  INFO 1 --- [report-service] [nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2026-03-01T02:05:32.168Z  WARN 1 --- [report-service] [nio-8085-exec-1] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/actuator/health' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-03-01T02:10:23.738Z  INFO 1 --- [report-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:15:23.703Z  INFO 1 --- [report-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:20:23.672Z  INFO 1 --- [report-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:25:23.640Z  INFO 1 --- [report-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:30:23.609Z  INFO 1 --- [report-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:35:23.578Z  INFO 1 --- [report-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-01T02:40:23.550Z  INFO 1 --- [report-service] [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+
+========================================
+LOGS: config-server
+========================================
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-03-01T02:01:43.093Z  INFO 1 --- [config-server] [           main] c.social.config.ConfigServerApplication  : Starting ConfigServerApplication v1.0.0 using Java 17.0.18 with PID 1 (/app/app.jar started by root in /app)
+2026-03-01T02:01:43.198Z  INFO 1 --- [config-server] [           main] c.social.config.ConfigServerApplication  : The following 2 profiles are active: "native", "prod"
+2026-03-01T02:02:02.556Z  INFO 1 --- [config-server] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=f0ee645b-1bd3-3c0e-ae50-7045a88b83ee
+2026-03-01T02:02:08.297Z  INFO 1 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8888 (http)
+2026-03-01T02:02:08.492Z  INFO 1 --- [config-server] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-01T02:02:08.495Z  INFO 1 --- [config-server] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-01T02:02:10.564Z  INFO 1 --- [config-server] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-01T02:02:10.589Z  INFO 1 --- [config-server] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 26549 ms
+2026-03-01T02:02:30.888Z  INFO 1 --- [config-server] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 15 endpoint(s) beneath base path '/actuator'
+2026-03-01T02:02:31.592Z  INFO 1 --- [config-server] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8888 (http) with context path ''
+2026-03-01T02:02:31.786Z  INFO 1 --- [config-server] [           main] c.social.config.ConfigServerApplication  : Started ConfigServerApplication in 58.333 seconds (process running for 65.998)
+2026-03-01T02:02:35.058Z  INFO 1 --- [config-server] [nio-8888-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-01T02:02:35.059Z  INFO 1 --- [config-server] [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-01T02:02:35.085Z  INFO 1 --- [config-server] [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 26 ms
+
+========================================
+LOGS: discovery-service
+========================================
+Defaulted container "discovery-service" out of: discovery-service, wait-config-server (init)
+2026-03-01T02:22:09.957Z  INFO 1 --- [discovery-service] [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.63:scoring-service:8083 with status UP (replication=false)
+2026-03-01T02:22:10.044Z  INFO 1 --- [discovery-service] [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.63:scoring-service:8083 with status UP (replication=true)
+2026-03-01T02:22:27.493Z  INFO 1 --- [discovery-service] [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.56:scoring-service:8083 with status DOWN (replication=false)
+2026-03-01T02:22:27.498Z  INFO 1 --- [discovery-service] [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance SCORING-SERVICE/10.1.0.56:scoring-service:8083 (replication=false)
+2026-03-01T02:22:28.008Z  INFO 1 --- [discovery-service] [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.56:scoring-service:8083 with status DOWN (replication=true)
+2026-03-01T02:22:28.009Z  INFO 1 --- [discovery-service] [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance SCORING-SERVICE/10.1.0.56:scoring-service:8083 (replication=true)
+2026-03-01T02:22:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2026-03-01T02:22:56.882Z  INFO 1 --- [discovery-service] [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.64:scoring-service:8083 with status UP (replication=false)
+2026-03-01T02:22:57.395Z  INFO 1 --- [discovery-service] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.64:scoring-service:8083 with status UP (replication=true)
+2026-03-01T02:23:14.128Z  INFO 1 --- [discovery-service] [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.62:scoring-service:8083 with status DOWN (replication=false)
+2026-03-01T02:23:14.137Z  INFO 1 --- [discovery-service] [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance SCORING-SERVICE/10.1.0.62:scoring-service:8083 (replication=false)
+2026-03-01T02:23:14.469Z  INFO 1 --- [discovery-service] [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Registered instance SCORING-SERVICE/10.1.0.62:scoring-service:8083 with status DOWN (replication=true)
+2026-03-01T02:23:14.473Z  INFO 1 --- [discovery-service] [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance SCORING-SERVICE/10.1.0.62:scoring-service:8083 (replication=true)
+2026-03-01T02:23:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 11ms
+2026-03-01T02:24:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2026-03-01T02:25:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2026-03-01T02:26:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2026-03-01T02:27:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-03-01T02:28:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2026-03-01T02:29:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-03-01T02:30:29.730Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2026-03-01T02:31:29.731Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2026-03-01T02:32:29.731Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2026-03-01T02:33:29.732Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2026-03-01T02:33:35.455Z  INFO 1 --- [discovery-service] [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance AUTH-SERVICE/auth-service-dfb64799d-vgbp6:auth-service:8081 (replication=false)
+2026-03-01T02:33:35.964Z  WARN 1 --- [discovery-service] [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: cancel failed because Lease is not registered for: AUTH-SERVICE/auth-service-dfb64799d-vgbp6:auth-service:8081
+2026-03-01T02:33:35.965Z  INFO 1 --- [discovery-service] [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Cancel): AUTH-SERVICE - auth-service-dfb64799d-vgbp6:auth-service:8081
+2026-03-01T02:33:35.967Z  WARN 1 --- [discovery-service] [et_localhost-14] c.n.eureka.cluster.ReplicationTask       : The replication of task AUTH-SERVICE/auth-service-dfb64799d-vgbp6:auth-service:8081:Cancel@localhost failed with response code 404
+2026-03-01T02:33:35.968Z  WARN 1 --- [discovery-service] [et_localhost-14] c.netflix.eureka.cluster.PeerEurekaNode  : AUTH-SERVICE/auth-service-dfb64799d-vgbp6:auth-service:8081:Cancel@localhost: missing entry.
+2026-03-01T02:34:28.021Z  INFO 1 --- [discovery-service] [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 18
+2026-03-01T02:34:29.732Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-03-01T02:35:29.732Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2026-03-01T02:35:41.627Z  INFO 1 --- [discovery-service] [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Registered instance AUTH-SERVICE/auth-service-6cf646b685-z6jhb:auth-service:8081 with status UP (replication=false)
+2026-03-01T02:35:42.133Z  INFO 1 --- [discovery-service] [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : Registered instance AUTH-SERVICE/auth-service-6cf646b685-z6jhb:auth-service:8081 with status UP (replication=true)
+2026-03-01T02:36:29.733Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2026-03-01T02:37:29.734Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 8ms
+2026-03-01T02:38:29.735Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2026-03-01T02:39:29.736Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2026-03-01T02:40:29.736Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2026-03-01T02:40:49.510Z  INFO 1 --- [discovery-service] [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance AUTH-SERVICE/auth-service-7dc46df48-bczcv:auth-service:8081 (replication=false)
+2026-03-01T02:40:50.023Z  WARN 1 --- [discovery-service] [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: cancel failed because Lease is not registered for: AUTH-SERVICE/auth-service-7dc46df48-bczcv:auth-service:8081
+2026-03-01T02:40:50.027Z  INFO 1 --- [discovery-service] [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Cancel): AUTH-SERVICE - auth-service-7dc46df48-bczcv:auth-service:8081
+2026-03-01T02:40:50.030Z  WARN 1 --- [discovery-service] [get_localhost-0] c.n.eureka.cluster.ReplicationTask       : The replication of task AUTH-SERVICE/auth-service-7dc46df48-bczcv:auth-service:8081:Cancel@localhost failed with response code 404
+2026-03-01T02:40:50.030Z  WARN 1 --- [discovery-service] [get_localhost-0] c.netflix.eureka.cluster.PeerEurekaNode  : AUTH-SERVICE/auth-service-7dc46df48-bczcv:auth-service:8081:Cancel@localhost: missing entry.
+2026-03-01T02:40:50.313Z  INFO 1 --- [discovery-service] [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance AUTH-SERVICE/auth-service-779c4cb796-sfpm7:auth-service:8081 (replication=false)
+2026-03-01T02:40:50.823Z  WARN 1 --- [discovery-service] [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: cancel failed because Lease is not registered for: AUTH-SERVICE/auth-service-779c4cb796-sfpm7:auth-service:8081
+2026-03-01T02:40:50.825Z  INFO 1 --- [discovery-service] [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Cancel): AUTH-SERVICE - auth-service-779c4cb796-sfpm7:auth-service:8081
+2026-03-01T02:40:50.827Z  WARN 1 --- [discovery-service] [et_localhost-14] c.n.eureka.cluster.ReplicationTask       : The replication of task AUTH-SERVICE/auth-service-779c4cb796-sfpm7:auth-service:8081:Cancel@localhost failed with response code 404
+2026-03-01T02:40:50.828Z  WARN 1 --- [discovery-service] [et_localhost-14] c.netflix.eureka.cluster.PeerEurekaNode  : AUTH-SERVICE/auth-service-779c4cb796-sfpm7:auth-service:8081:Cancel@localhost: missing entry.
+2026-03-01T02:41:29.737Z  INFO 1 --- [discovery-service] [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+

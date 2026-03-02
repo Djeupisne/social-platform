@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'spring-boot-apps'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'config-server:8888'
+          - 'discovery-service:8761'
+          - 'api-gateway:9000'
+          - 'auth-service:8081'
+          - 'main-service:8082'
+          - 'scoring-service:8083'
+          - 'admin-service:8084'
+          - 'report-service:8085'

@@ -1,13 +1,12 @@
-server:
+﻿server:
   port: 9000
-
 spring:
   application:
     name: api-gateway
   data:
     redis:
-      host: ${REDIS_HOST:redis}
-      port: ${REDIS_PORT:6379}
+      host: ${REDIS_SERVICE_HOST:redis}
+      port: 6379
   cloud:
     gateway:
       discovery:
@@ -19,23 +18,32 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path=/api/auth/**
+          filters:
+            - StripPrefix=2
         - id: main-service
           uri: lb://main-service
           predicates:
             - Path=/api/main/**
+          filters:
+            - StripPrefix=2
         - id: scoring-service
           uri: lb://scoring-service
           predicates:
             - Path=/api/scoring/**
+          filters:
+            - StripPrefix=2
         - id: admin-service
           uri: lb://admin-service
           predicates:
             - Path=/api/admin/**
+          filters:
+            - StripPrefix=2
         - id: report-service
           uri: lb://report-service
           predicates:
             - Path=/api/report/**
-
+          filters:
+            - StripPrefix=2
 eureka:
   client:
     service-url:
@@ -45,7 +53,6 @@ eureka:
   instance:
     hostname: ${spring.application.name}
     prefer-ip-address: true
-
 management:
   endpoints:
     web:
@@ -56,3 +63,18 @@ management:
       enabled: false
     redis:
       enabled: false
+
+      springdoc:
+        swagger-ui:
+          path: /swagger-ui.html
+          urls:
+            - name: auth
+              url: /auth/v3/api-docs
+            - name: main
+              url: /main/v3/api-docs
+            - name: admin
+              url: /admin/v3/api-docs
+            - name: report
+              url: /report/v3/api-docs
+        api-docs:
+          enabled: true
