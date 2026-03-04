@@ -15,9 +15,12 @@ spring:
           enabled: true
           lower-case-service-id: true
       globalcors:
+        add-to-simple-url-handler-mapping: true
         cors-configurations:
           '[/**]':
-            allowed-origin-patterns: "*"
+            allowed-origins:
+              - "https://fluffy-fishstick-g4rw6p9w564pc6g4-4200.app.github.dev"
+              - "https://special-xylophone-9754wxv4qqr7c9pw6-4200.app.github.dev"
             allowed-methods:
               - GET
               - POST
@@ -30,43 +33,56 @@ spring:
             max-age: 3600
       routes:
         # ────────────────────────────────────────────────
-        # AUTHENTIFICATION – route directe (gardée)
+        # AUTH SERVICE
         # ────────────────────────────────────────────────
-        - id: auth-service-public
+        - id: auth-service
           uri: lb://auth-service
           predicates:
             - Path=/api/v1/auth/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+                skip: true  # Skip authentication for auth service
 
         # ────────────────────────────────────────────────
-        # AUTRES SERVICES (inchangés)
+        # MAIN SERVICE
         # ────────────────────────────────────────────────
         - id: main-service
           uri: lb://main-service
           predicates:
-            - Path=/api/main/**
+            - Path=/api/v1/menages/**,/api/v1/residents/**
           filters:
-            - StripPrefix=2
+            - name: AuthenticationFilter
 
+        # ────────────────────────────────────────────────
+        # SCORING SERVICE
+        # ────────────────────────────────────────────────
         - id: scoring-service
           uri: lb://scoring-service
           predicates:
-            - Path=/api/scoring/**
+            - Path=/api/v1/scoring/**
           filters:
-            - StripPrefix=2
+            - name: AuthenticationFilter
 
+        # ────────────────────────────────────────────────
+        # ADMIN SERVICE
+        # ────────────────────────────────────────────────
         - id: admin-service
           uri: lb://admin-service
           predicates:
-            - Path=/api/admin/**
+            - Path=/api/v1/admin/**,/api/v1/programmes/**
           filters:
-            - StripPrefix=2
+            - name: AuthenticationFilter
 
+        # ────────────────────────────────────────────────
+        # REPORT SERVICE
+        # ────────────────────────────────────────────────
         - id: report-service
           uri: lb://report-service
           predicates:
-            - Path=/api/report/**
+            - Path=/api/v1/reports/**
           filters:
-            - StripPrefix=2
+            - name: AuthenticationFilter
 
 eureka:
   client:
