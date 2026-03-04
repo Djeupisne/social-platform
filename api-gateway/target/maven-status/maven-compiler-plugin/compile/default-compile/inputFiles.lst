@@ -1,5 +1,5 @@
-C:\wamp64\www\social-platform\api-gateway\src\main\java\com\social\gateway\filter\AuthenticationFilter.java
-C:\wamp64\www\social-platform\api-gateway\src\main\java\com\social\gateway\ApiGatewayApplication.java
-C:\wamp64\www\social-platform\api-gateway\src\main\java\com\social\gateway\config\GatewayConfig.java
-C:\wamp64\www\social-platform\api-gateway\src\main\java\com\social\gateway\filter\LoggingFilter.java
-C:\wamp64\www\social-platform\api-gateway\src\main\java\com\social\gateway\config\SecurityConfig.java
+/workspaces/social-platform/api-gateway/src/main/java/com/social/gateway/ApiGatewayApplication.java
+/workspaces/social-platform/api-gateway/src/main/java/com/social/gateway/config/SecurityConfig.java
+/workspaces/social-platform/api-gateway/src/main/java/com/social/gateway/config/GatewayConfig.java
+/workspaces/social-platform/api-gateway/src/main/java/com/social/gateway/filter/LoggingFilter.java
+/workspaces/social-platform/api-gateway/src/main/java/com/social/gateway/filter/AuthenticationFilter.java

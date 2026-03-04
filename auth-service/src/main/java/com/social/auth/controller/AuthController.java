@@ -34,7 +34,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Authentication", description = "API d'authentification et gestion des utilisateurs")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8100"})
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "http://localhost:8100",
+    "https://fluffy-fishstick-g4rw6p9w564pc6g4-4200.app.github.dev"
+})
 public class AuthController {
 
     private final AuthService authService;

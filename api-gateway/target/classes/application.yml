@@ -1,5 +1,6 @@
 ﻿server:
   port: 9000
+
 spring:
   application:
     name: api-gateway
@@ -13,37 +14,60 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowed-headers: "*"
+            allow-credentials: true
+            max-age: 3600
       routes:
-        - id: auth-service
+        # ────────────────────────────────────────────────
+        # AUTHENTIFICATION – route directe (gardée)
+        # ────────────────────────────────────────────────
+        - id: auth-service-public
           uri: lb://auth-service
           predicates:
-            - Path=/api/auth/**
-          filters:
-            - StripPrefix=2
+            - Path=/api/v1/auth/**
+
+        # ────────────────────────────────────────────────
+        # AUTRES SERVICES (inchangés)
+        # ────────────────────────────────────────────────
         - id: main-service
           uri: lb://main-service
           predicates:
             - Path=/api/main/**
           filters:
             - StripPrefix=2
+
         - id: scoring-service
           uri: lb://scoring-service
           predicates:
             - Path=/api/scoring/**
           filters:
             - StripPrefix=2
+
         - id: admin-service
           uri: lb://admin-service
           predicates:
             - Path=/api/admin/**
           filters:
             - StripPrefix=2
+
         - id: report-service
           uri: lb://report-service
           predicates:
             - Path=/api/report/**
           filters:
             - StripPrefix=2
+
 eureka:
   client:
     service-url:
@@ -53,6 +77,7 @@ eureka:
   instance:
     hostname: ${spring.application.name}
     prefer-ip-address: true
+
 management:
   endpoints:
     web:
@@ -64,17 +89,22 @@ management:
     redis:
       enabled: false
 
-      springdoc:
-        swagger-ui:
-          path: /swagger-ui.html
-          urls:
-            - name: auth
-              url: /auth/v3/api-docs
-            - name: main
-              url: /main/v3/api-docs
-            - name: admin
-              url: /admin/v3/api-docs
-            - name: report
-              url: /report/v3/api-docs
-        api-docs:
-          enabled: true
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: auth
+        url: /auth/v3/api-docs
+      - name: main
+        url: /main/v3/api-docs
+      - name: admin
+        url: /admin/v3/api-docs
+      - name: report
+        url: /report/v3/api-docs
+  api-docs:
+    enabled: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG

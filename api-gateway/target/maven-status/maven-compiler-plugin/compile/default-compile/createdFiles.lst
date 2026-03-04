@@ -1,6 +1,6 @@
-com\social\gateway\config\SecurityConfig.class
-com\social\gateway\filter\AuthenticationFilter.class
-com\social\gateway\config\GatewayConfig.class
-com\social\gateway\ApiGatewayApplication.class
-com\social\gateway\filter\AuthenticationFilter$TokenInfo.class
-com\social\gateway\filter\LoggingFilter.class
+com/social/gateway/config/GatewayConfig.class
+com/social/gateway/config/SecurityConfig.class
+com/social/gateway/filter/AuthenticationFilter$TokenInfo.class
+com/social/gateway/filter/LoggingFilter.class
+com/social/gateway/filter/AuthenticationFilter.class
+com/social/gateway/ApiGatewayApplication.class

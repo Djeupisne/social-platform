@@ -18,30 +18,32 @@ public class GatewayConfig {
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
-                // Auth Service - public routes (no auth required)
+
+                // ────────────────────────────────────────────────
+                // AUTHENTIFICATION – route directe (gardée)
+                // ────────────────────────────────────────────────
                 .route("auth-service-public", r -> r
                         .path("/api/v1/auth/**")
                         .uri("lb://auth-service"))
 
-                // Main Service - protected
+                // ────────────────────────────────────────────────
+                // AUTRES SERVICES (inchangés)
+                // ────────────────────────────────────────────────
                 .route("main-service", r -> r
                         .path("/api/v1/menages/**", "/api/v1/residents/**")
                         .filters(f -> f.filter(authFilter))
                         .uri("lb://main-service"))
 
-                // Scoring Service - protected
                 .route("scoring-service", r -> r
                         .path("/api/v1/scoring/**")
                         .filters(f -> f.filter(authFilter))
                         .uri("lb://scoring-service"))
 
-                // Admin Service - protected (AGENT role required)
                 .route("admin-service", r -> r
                         .path("/api/v1/admin/**", "/api/v1/programmes/**")
                         .filters(f -> f.filter(authFilter))
                         .uri("lb://admin-service"))
 
-                // Report Service - protected
                 .route("report-service", r -> r
                         .path("/api/v1/reports/**")
                         .filters(f -> f.filter(authFilter))
