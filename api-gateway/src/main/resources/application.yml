@@ -6,21 +6,21 @@ spring:
     name: api-gateway
   data:
     redis:
-      host: ${REDIS_SERVICE_HOST:redis}
+      host: redis
       port: 6379
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: false
           lower-case-service-id: true
       globalcors:
         add-to-simple-url-handler-mapping: true
         cors-configurations:
           '[/**]':
-            allowed-origins:
-              - "https://fluffy-fishstick-g4rw6p9w564pc6g4-4200.app.github.dev"
-              - "https://special-xylophone-9754wxv4qqr7c9pw6-4200.app.github.dev"
+            allowed-origin-patterns:
+              - "*"                              # ← wildcard pour DEV → accepte TOUTES origines Codespaces
+              - "https://*.app.github.dev"       # ← plus précis pour Codespaces (tous les sous-domaines)
             allowed-methods:
               - GET
               - POST
@@ -29,60 +29,38 @@ spring:
               - DELETE
               - OPTIONS
             allowed-headers: "*"
-            allow-credentials: true
+            allow-credentials: false             # ← false obligatoire avec wildcard (*)
             max-age: 3600
       routes:
-        # ────────────────────────────────────────────────
-        # AUTH SERVICE
-        # ────────────────────────────────────────────────
+        # AUTH SERVICE - route directe sans rewrite (comme tu l'as déjà corrigé)
         - id: auth-service
-          uri: lb://auth-service
+          uri: http://auth-service:8081
           predicates:
             - Path=/api/v1/auth/**
-          filters:
-            - name: AuthenticationFilter
-              args:
-                skip: true  # Skip authentication for auth service
 
-        # ────────────────────────────────────────────────
         # MAIN SERVICE
-        # ────────────────────────────────────────────────
         - id: main-service
-          uri: lb://main-service
+          uri: http://main-service:8082
           predicates:
             - Path=/api/v1/menages/**,/api/v1/residents/**
-          filters:
-            - name: AuthenticationFilter
 
-        # ────────────────────────────────────────────────
         # SCORING SERVICE
-        # ────────────────────────────────────────────────
         - id: scoring-service
-          uri: lb://scoring-service
+          uri: http://scoring-service:8083
           predicates:
             - Path=/api/v1/scoring/**
-          filters:
-            - name: AuthenticationFilter
 
-        # ────────────────────────────────────────────────
         # ADMIN SERVICE
-        # ────────────────────────────────────────────────
         - id: admin-service
-          uri: lb://admin-service
+          uri: http://admin-service:8084
           predicates:
             - Path=/api/v1/admin/**,/api/v1/programmes/**
-          filters:
-            - name: AuthenticationFilter
 
-        # ────────────────────────────────────────────────
         # REPORT SERVICE
-        # ────────────────────────────────────────────────
         - id: report-service
-          uri: lb://report-service
+          uri: http://report-service:8085
           predicates:
             - Path=/api/v1/reports/**
-          filters:
-            - name: AuthenticationFilter
 
 eureka:
   client:
@@ -91,7 +69,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    hostname: ${spring.application.name}
+    hostname: api-gateway
     prefer-ip-address: true
 
 management:
